@@ -204,6 +204,7 @@
         <button id="validateButton" onclick="validateAnswers()">Valider mes réponses</button>
         <button id="nextButton" style="display: none;" onclick="nextQuestion()">Question suivante</button>
         <div class="percentage" id="percentage"></div>
+        <div id="resultImage" style="text-align: center; margin-top: 20px;"></div>
     </div>
 
     <script>
@@ -889,8 +890,8 @@
 
         // Mélanger les questions
         let questionsArray = Object.entries(questions_ccna);
-        questionsArray = shuffleArray(questionsArray);
-
+        questionsArray = shuffleArray(Object.entries(questions_ccna)).slice(0, 60); // Prendre seulement 60 questions pour mieux simuler l'épreuve
+        
         let currentQuestionIndex = 0;
         let correctAnswersCount = 0; // Compteur des bonnes réponses
 
