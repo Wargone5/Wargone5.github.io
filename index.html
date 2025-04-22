@@ -5,6 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entraînement CCNA - Léocard Jérémie</title>
     <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Changement ici */
+    height: auto; /* Changement ici */
+    min-height: 100vh;
+    overflow-y: auto; /* Permet de scroller */
+}
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+        font-size: 1.4em;
+        text-align: center;
+        margin-bottom: 15px;
+        }
+        h2 {
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .question-wrapper {
+            display: flex;
+            margin-bottom: 20px;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+        .question {
+            font-size: 1.2em;
+            margin-right: 20px;
+            flex: 1;
+        }
+        .question img {
+            max-width: 100%;
+            height: auto;
+            max-height: 150px;
+            border-radius: 8px;
+        }
+        .answers {
+            list-style: none;
+            padding: 0;
+        }
+        .answers li {
+            background-color: #f0f0f0;
+            margin: 5px 0;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 0.95em;
+        }
+        .answers li:hover {
+            background-color: #e0e0e0;
+        }
+        .feedback {
+            margin-top: 20px;
+            font-size: 1.1em;
+            text-align: center;
+        }
+        .feedback.correct {
+            color: green;
+        }
+        .feedback.incorrect {
+            color: red;
+        }
+        .percentage {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .question-wrapper {
+            display: flex;
+            flex-direction: column; /* Ajouté pour que l’image soit en dessous de la question */
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        #questionImage img {
+            max-width: 100%; /* Empêche l’image de dépasser le conteneur */
+            height: auto;
+            margin-top: 10px;
+            border-radius: 8px;
+        }
         @media screen and (max-width: 600px) {
         body {
     font-family: Arial, sans-serif;
