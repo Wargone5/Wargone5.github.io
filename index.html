@@ -897,7 +897,7 @@
 
         // Mélanger les questions
         let questionsArray = Object.entries(questions_ccna);
-        questionsArray = shuffleArray(Object.entries(questions_ccna)).slice(0, 60); // Prendre seulement 60 questions pour mieux simuler l'épreuve
+        questionsArray = shuffleArray(Object.entries(questions_ccna)).slice(0, 4); // Prendre seulement 60 questions pour mieux simuler l'épreuve
         
         let currentQuestionIndex = 0;
         let correctAnswersCount = 0; // Compteur des bonnes réponses
@@ -1020,6 +1020,8 @@ document.getElementById('answers').innerHTML = '';
 document.getElementById('feedback').textContent = '';
 document.getElementById('validateButton').style.display = 'none';
 document.getElementById('nextButton').style.display = 'none';
+document.getElementById('questionImage').style.display = 'none';
+        
 
 const percentageText = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
 document.getElementById('percentage').textContent = percentageText;
