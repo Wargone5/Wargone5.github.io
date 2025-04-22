@@ -1008,11 +1008,26 @@
         const percentage = (correctAnswersCount / questionsArray.length) * 100;
 
         document.getElementById('question').textContent = 'Félicitations, vous avez terminé toutes les questions !';
-        document.getElementById('answers').innerHTML = '';
-        document.getElementById('feedback').textContent = '';
-        document.getElementById('validateButton').style.display = 'none';
-        document.getElementById('nextButton').style.display = 'none';
-        document.getElementById('percentage').textContent = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
+document.getElementById('answers').innerHTML = '';
+document.getElementById('feedback').textContent = '';
+document.getElementById('validateButton').style.display = 'none';
+document.getElementById('nextButton').style.display = 'none';
+
+const percentageText = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
+document.getElementById('percentage').textContent = percentageText;
+
+// Afficher une image si le score est supérieur à 70%
+const resultImage = document.getElementById('resultImage');
+resultImage.innerHTML = '';
+if (percentage >= 70) {
+    const img = document.createElement('img');
+    img.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3A3eHZ1c2d5bXlvbW9yNnM1cTZrcDNzNHZmZGsyamphNzJ2ZTk5NyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Ll2fajzk9DgaY/giphy.gif'; // Image de réussite
+    img.alt = 'Bravo !';
+    img.style.maxWidth = '100%';
+    img.style.borderRadius = '8px';
+    resultImage.appendChild(img);
+}
+
     }
 }
 
