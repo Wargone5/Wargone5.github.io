@@ -38,8 +38,9 @@
         }
         .question-wrapper {
             display: flex;
-            align-items: center;
             margin-bottom: 20px;
+            flex-direction: column;
+            align-items: flex-start;
         }
         .question {
             font-size: 1.2em;
@@ -47,7 +48,8 @@
             flex: 1;
         }
         .question img {
-            max-width: 150px;
+            max-width: 100%;
+            height: auto;
             max-height: 150px;
             border-radius: 8px;
         }
@@ -60,6 +62,7 @@
             margin: 5px 0;
             padding: 10px;
             border-radius: 5px;
+            font-size: 0.95em;
         }
         .answers li:hover {
             background-color: #e0e0e0;
