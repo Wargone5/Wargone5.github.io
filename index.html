@@ -879,10 +879,17 @@
         ['2001:DA48:FC5:A4::/64']
     ]
         };
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
 
         // Mélanger les questions
         let questionsArray = Object.entries(questions_ccna);
-        questionsArray = questionsArray.sort(() => Math.random() - 0.5); // Mélange les questions de manière aléatoire
+        questionsArray = shuffleArray(questionsArray);
 
         let currentQuestionIndex = 0;
         let correctAnswersCount = 0; // Compteur des bonnes réponses
