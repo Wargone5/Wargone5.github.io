@@ -893,7 +893,7 @@
             document.getElementById('question').textContent = questionText;
 
             // Mélanger les options avant de les afficher
-            const shuffledOptions = options.sort(() => Math.random() - 0.5);
+            const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
 
             const answersList = document.getElementById('answers');
             answersList.innerHTML = '';
