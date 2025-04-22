@@ -195,6 +195,7 @@
     <div class="container">
         <h1>Entraînement CCNA</h1>
         <h2>Léocard Jérémie powered by OpenAI</h2>
+        <div id="questionCounter" style="text-align: center; font-weight: bold; margin-bottom: 10px;"></div>    
         <div class="question-wrapper" id="questionWrapper">
             <div class="question" id="question"></div>
             <div id="questionImage"></div>
@@ -880,6 +881,12 @@
         ['2001:DA48:FC5:A4::/64']
     ]
         };
+        function updateQuestionCounter() {
+    const total = Math.min(60, questionsArray.length); // S'assurer de ne pas dépasser 60
+    const current = Math.min(currentQuestionIndex + 1, total);
+    document.getElementById('questionCounter').textContent = `${current}/${total}`;
+}
+
         function shuffleArray(array) {
             for (let i = array.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
@@ -920,6 +927,7 @@
                 listItem.appendChild(checkbox);
                 listItem.appendChild(label);
                 answersList.appendChild(listItem);
+                updateQuestionCounter();
             });
 
             document.getElementById('feedback').textContent = '';
