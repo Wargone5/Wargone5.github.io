@@ -73,6 +73,9 @@
       padding: 10px 20px;
       font-size: 1em;
     }
+    .correct-answer {
+  background-color: #b6fcb6; /* vert clair */
+    }
     img.result {
       display: block;
       margin: 20px auto;
@@ -232,7 +235,7 @@
 
         document.querySelectorAll("input").forEach(input => {
           if (correctAnswers.includes(input.value)) {
-            input.parentElement.classList.add("highlight");
+            input.parentElement.classList.add("correct-answer");
           }
         });
       }
