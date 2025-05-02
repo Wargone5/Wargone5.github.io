@@ -261,7 +261,8 @@
         let correctAnswersCount = 0; // Compteur des bonnes réponses
 
         function loadQuestion() {
-            const [questionText, [options, correctAnswers, imageUrl]] = questionsArray[currentQuestionIndex];
+            const [questionText, [options, correctAnswers]] = questionsArray[currentQuestionIndex];
+
 
             document.getElementById('question').textContent = questionText;
 
