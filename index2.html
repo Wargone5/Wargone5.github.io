@@ -92,14 +92,14 @@
       {
         question: "Transformée de Fourier de la Fonction Porte : \\( s(t) = A \\cdot \\text{rect}(at) \\) ?",
         options: [
-          "\\( \\text{sinc}(f) \\)",
-          "\\( \\text{rect}(f) \\)",
-          "\\( \\delta(f) \\)",
-          "\\( 1 \\)",
-          "\\( e^{-j2\\pi f} \\)",
-          "\\( \\text{tri}(f) \\)"
+          "S(f) = A a \\cdot \\text{sinc}^2(\\pi f a)",
+          "S(f) = A \\cdot \\frac{\\sin(\\pi f a)}{\\pi f} = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
+          "S(f) = A \\cdot \\delta(f)",
+          "S(f) = \\frac{1}{2} \\delta(f) + \\frac{i}{2\\pi f}",
+          "S(f) = \\frac{A}{2} \\left[ \\delta(f - f_0) + \\delta(f + f_0) \\right]",
+          "S(f) = \\frac{A}{2i} \\left[ \\delta(f - f_0) - \\delta(f + f_0) \\right]"
         ],
-        correct: ["\\( \\text{sinc}(f) \\)"]
+        correct: ["S(f) = A a \\cdot \\text{sinc}^2(\\pi f a)"]
       },
       {
         question: "Transformée de Fourier de la Fonction Triangle : \\( s(t) = A \\cdot \\text{tri}(at) \\) ?",
