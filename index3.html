@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entraînement Transformée de Fourier - Léocard Jérémie</title>
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <title>Entraînement CCNA - Léocard Jérémie</title>
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -214,7 +212,7 @@
     </div>
 
     <script>
-        const questions_ccna = [
+        const questions = [
       {
         question: "Quelle est la transformée de Fourier de la fonction porte \\( \\text{rect}(t) \\) ?",
         options: [
@@ -335,7 +333,7 @@
                 listItem.appendChild(label);
                 answersList.appendChild(listItem);
                 updateQuestionCounter();
-                MathJax.typesetPromise();
+                MathJax.typeset();
             });
 
             document.getElementById('feedback').textContent = '';
@@ -433,8 +431,6 @@ document.getElementById('questionImage').style.display = 'none';
 
 const percentageText = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
 document.getElementById('percentage').textContent = percentageText;
-MathJax.typesetPromise();
-
 
 // Afficher une image si le score est supérieur à 70%
 const resultImage = document.getElementById('resultImage');
