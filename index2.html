@@ -219,11 +219,12 @@
   const questionData = shuffledQuestions[currentQuestionIndex];
   const correctAnswers = questionData.correct;
 
-  const selected = Array.from(document.querySelectorAll("input:checked")).map(el => el.value);
+  const selectedInputs = Array.from(document.querySelectorAll("input:checked"));
+  const selectedValues = selectedInputs.map(el => el.value);
   const feedbackEl = document.getElementById("feedback");
 
-  const isCorrect = correctAnswers.every(ans => selected.includes(ans)) &&
-                    selected.every(ans => correctAnswers.includes(ans));
+  const isCorrect = correctAnswers.length === selectedValues.length &&
+    correctAnswers.every(ans => selectedValues.includes(ans));
 
   if (isCorrect) {
     feedbackEl.textContent = "Correct !";
@@ -234,11 +235,12 @@
     feedbackEl.className = "feedback incorrect";
   }
 
-  // Désactiver tous les inputs pour éviter les modifications après validation
-  document.querySelectorAll("input").forEach(input => {
+  // Désactiver tous les inputs
+  const allInputs = document.querySelectorAll("input");
+  allInputs.forEach(input => {
     input.disabled = true;
 
-    // Surligner les bonnes réponses, même si non sélectionnées
+    // Surligner les bonnes réponses (cochées ou non)
     if (correctAnswers.includes(input.value)) {
       input.parentElement.classList.add("correct-answer");
     }
@@ -247,6 +249,7 @@
   document.getElementById("validateButton").disabled = true;
   document.getElementById("nextButton").style.display = "block";
 }
+
 
 
     function loadNextQuestion() {
