@@ -335,7 +335,7 @@
                 listItem.appendChild(label);
                 answersList.appendChild(listItem);
                 updateQuestionCounter();
-                MathJax.typeset();
+                MathJax.typesetPromise();
             });
 
             document.getElementById('feedback').textContent = '';
@@ -433,6 +433,8 @@ document.getElementById('questionImage').style.display = 'none';
 
 const percentageText = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
 document.getElementById('percentage').textContent = percentageText;
+MathJax.typesetPromise();
+
 
 // Afficher une image si le score est supérieur à 70%
 const resultImage = document.getElementById('resultImage');
