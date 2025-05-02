@@ -1,486 +1,231 @@
 <!DOCTYPE html>
-
-
 <html lang="fr">
-
 <head>
-
   <meta charset="UTF-8" />
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
   <title>Transformée de Fourier</title>
-
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-
   <style>
-
     body {
-
       font-family: Arial, sans-serif;
-
       background-color: #f4f4f4;
-
       margin: 0;
-
       padding: 0;
-
       display: flex;
-
       justify-content: center;
-
       align-items: flex-start;
-
       min-height: 100vh;
-
     }
-
     .container {
-
       background-color: white;
-
       padding: 20px;
-
       border-radius: 8px;
-
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
       width: 90%;
-
       max-width: 600px;
-
       margin-top: 20px;
-
     }
-
     h1 {
-
       text-align: center;
-
     }
-
-    #questionCounter {
-
-      text-align: center;
-
-      font-weight: bold;
-
-      margin-bottom: 10px;
-
-    }
-
     .answers {
-
       list-style: none;
-
       padding: 0;
-
     }
-
     .answers li {
-
       background-color: #f0f0f0;
-
       margin: 5px 0;
-
       padding: 10px;
-
       border-radius: 5px;
-
     }
-
     .answers li:hover {
-
       background-color: #e0e0e0;
-
     }
-
     .feedback {
-
       margin-top: 20px;
-
       font-size: 1.1em;
-
       text-align: center;
-
     }
-
     .feedback.correct {
-
       color: green;
-
     }
-
     .feedback.incorrect {
-
       color: red;
-
     }
-
-    .percentage {
-
-      font-size: 1.2em;
-
-      font-weight: bold;
-
-      margin-top: 20px;
-
-      text-align: center;
-
-    }
-
     .correct-answer {
-
       background-color: #b6fcb6 !important;
-
     }
-
     button {
-
       display: block;
-
       margin: 10px auto;
-
       padding: 10px 20px;
-
       font-size: 1em;
-
     }
-
   </style>
-
 </head>
-
 <body>
-
   <div class="container">
-
     <h1>Transformée de Fourier</h1>
-
-    <div id="questionCounter"></div>
-
     <div class="question" id="question"></div>
-
     <ul class="answers" id="answers"></ul>
-
     <div class="feedback" id="feedback"></div>
-
     <button id="validateButton" onclick="validateAnswers()">Valider ma réponse</button>
-
     <button id="nextButton" onclick="loadNextQuestion()" style="display: none;">Question suivante</button>
-
-    <div class="percentage" id="percentage"></div>
-
   </div>
 
-
-
   <script>
-
-    const questions = [
-
+    const allQuestions = [
       {
-
         question: "Transformée de Fourier de la Fonction Porte : \\( s(t) = A \\cdot \\text{rect}(at) \\) ?",
-
         options: [
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( \\text{rect}(f) \\)",
-
           "\\( \\delta(f) \\)",
-
           "\\( 1 \\)",
-
           "\\( e^{-j2\\pi f} \\)",
-
           "\\( \\text{tri}(f) \\)"
-
         ],
-
         correct: ["\\( \\text{sinc}(f) \\)"]
-
       },
-
       {
-
-
-        question: "Transformée de Fourier de la Fonction Triangle \( s(t) = A \cdot \text{tri}(at) \) ?",
-
-
         question: "Transformée de Fourier de la Fonction Triangle \\( s(t) = A \\cdot \\text{tri}(at) \\) ?",
-
         options: [
-
           "\\( \\text{rect}^2(f) \\)",
-
           "\\( \\text{sinc}^2(f) \\)",
-
           "\\( \\delta(f) \\)",
-
           "\\( 1 \\)",
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( \\text{tri}(f) \\)"
-
         ],
-
         correct: ["\\( \\text{sinc}^2(f) \\)"]
-
       },
-
       {
-
-
-        question: "Transformée de Fourier de la Fonction Sinus \( s(t) = A \cdot \sin(2\pi f_0 t) \) ?",
-
-
         question: "Transformée de Fourier de la Fonction Sinus \\( s(t) = A \\cdot \\sin(2\\pi f_0 t) \\) ?",
-
         options: [
-
           "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
-
           "\\( A [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( e^{j2\\pi f_0 t} \\)",
-
           "\\( A \\cdot \\cos(2\\pi f_0 t) \\)",
-
           "\\( \\delta(f) \\)"
-
         ],
-
         correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)"]
-
       },
-
       {
-
-
-        question: "Transformée de Fourier de la Fonction Cosinus \( s(t) = A \cdot \cos(2\pi f_0 t) \) ?",
-
-
         question: "Transformée de Fourier de la Fonction Cosinus \\( s(t) = A \\cdot \\cos(2\\pi f_0 t) \\) ?",
-
         options: [
-
           "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
-
           "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
-
           "\\( \\delta(f) \\)",
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( A \\cdot \\sin(2\\pi f_0 t) \\)",
-
           "\\( 1 \\)"
-
         ],
-
         correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)"]
-
       },
-
       {
-
-
-        question: "Transformée de Fourier de la Fonction Constante \( s(t) = A \) ?",
-
-
         question: "Transformée de Fourier de la Fonction Constante \\( s(t) = A \\) ?",
-
         options: [
-
           "\\( A \\cdot \\delta(f) \\)",
-
           "\\( 1 \\)",
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( A \\)",
-
           "\\( \\delta(t) \\)",
-
           "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)"
-
         ],
-
         correct: ["\\( A \\cdot \\delta(f) \\)"]
-
       },
-
       {
-
-
-        question: "Transformée de Fourier de l’échelon unité (Heaviside) \( s(t) = \epsilon(t) \) ?",
-
-
         question: "Transformée de Fourier de l’échelon unité (Heaviside) \\( s(t) = \\epsilon(t) \\) ?",
-
         options: [
-
           "\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)",
-
           "\\( \\delta(f) \\)",
-
           "\\( \\text{sinc}(f) \\)",
-
           "\\( A \\cdot \\delta(f) \\)",
-
           "\\( 1 \\)",
-
           "\\( e^{-j2\\pi f} \\)"
-
         ],
-
         correct: ["\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)"]
-
       }
-
     ];
 
-
-
-    let currentQuestionIndex = 0;
-
-
+    let remainingQuestions = [];
 
     function shuffleArray(array) {
-
       return [...array].sort(() => Math.random() - 0.5);
-
     }
 
+    function resetQuestions() {
+      remainingQuestions = shuffleArray([...allQuestions]);
+    }
 
+    let currentQuestion = null;
 
     function loadQuestion() {
+      if (remainingQuestions.length === 0) {
+        resetQuestions(); // Recharger toutes les questions
+      }
 
-      const questionData = shuffleArray(questions)[0];
-
-      currentQuestion = questionData;
-
-
-
-      document.getElementById("question").innerHTML = questionData.question;
-
+      currentQuestion = remainingQuestions.pop();
+      document.getElementById("question").innerHTML = currentQuestion.question;
       const answersList = document.getElementById("answers");
-
       answersList.innerHTML = "";
 
-
-
-      const shuffledOptions = shuffleArray(questionData.options);
-
-
+      const shuffledOptions = shuffleArray(currentQuestion.options);
 
       shuffledOptions.forEach((option, index) => {
-
         const li = document.createElement("li");
-
         const input = document.createElement("input");
-
         input.type = "checkbox";
-
         input.id = "answer" + index;
-
         input.value = option;
 
-
-
         const label = document.createElement("label");
-
         label.setAttribute("for", input.id);
-
         label.innerHTML = option;
 
-
-
         li.appendChild(input);
-
         li.appendChild(label);
-
         answersList.appendChild(li);
-
       });
-
-
 
       document.getElementById("feedback").textContent = "";
-
       document.getElementById("nextButton").style.display = "none";
-
       document.getElementById("validateButton").disabled = false;
-
-
-
-      document.getElementById("questionCounter").textContent = "";
-
       MathJax.typeset();
-
     }
-
-
 
     function validateAnswers() {
-
       const correctAnswers = currentQuestion.correct;
-
       const selectedInputs = Array.from(document.querySelectorAll("input"));
-
       const selectedValues = selectedInputs.filter(i => i.checked).map(i => i.value);
-
       const feedbackEl = document.getElementById("feedback");
 
-
-
       const isCorrect =
-
         correctAnswers.length === selectedValues.length &&
-
         correctAnswers.every(ans => selectedValues.includes(ans));
 
-
-
       feedbackEl.textContent = isCorrect ? "Correct !" : "Incorrect.";
-
       feedbackEl.className = "feedback " + (isCorrect ? "correct" : "incorrect");
 
-
-
       selectedInputs.forEach(input => {
-
         input.disabled = true;
-
         if (correctAnswers.includes(input.value)) {
-
           input.parentElement.classList.add("correct-answer");
-
         }
       });
-      document.getElementById("validateButton").disabled = true;     
-      document.getElementById("nextButton").style.display = "block";   
-    }    
-    function loadNextQuestion() {
 
-      loadQuestion();
-
+      document.getElementById("validateButton").disabled = true;
+      document.getElementById("nextButton").style.display = "block";
     }
 
+    function loadNextQuestion() {
+      loadQuestion();
+    }
 
-
-    let currentQuestion;
-
+    resetQuestions();
     loadQuestion();
-
   </script>
-
 </body>
 </html>
