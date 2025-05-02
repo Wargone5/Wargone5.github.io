@@ -64,17 +64,17 @@
       margin-top: 20px;
       text-align: center;
     }
-    .highlight {
-      background-color: #b6fcb6;
+    .correct-answer {
+      background-color: #b6fcb6 !important;
+    }
+    .wrong-answer {
+      background-color: #fcb6b6 !important;
     }
     button {
       display: block;
       margin: 10px auto;
       padding: 10px 20px;
       font-size: 1em;
-    }
-    .correct-answer {
-  background-color: #b6fcb6; /* vert clair */
     }
     img.result {
       display: block;
@@ -216,41 +216,46 @@
     }
 
     function validateAnswers() {
-  const questionData = shuffledQuestions[currentQuestionIndex];
-  const correctAnswers = questionData.correct;
+      const questionData = shuffledQuestions[currentQuestionIndex];
+      const correctAnswers = questionData.correct;
 
-  const selectedInputs = Array.from(document.querySelectorAll("input:checked"));
-  const selectedValues = selectedInputs.map(el => el.value);
-  const feedbackEl = document.getElementById("feedback");
+      const selectedInputs = Array.from(document.querySelectorAll("input"));
+      const selectedValues = selectedInputs.filter(i => i.checked).map(i => i.value);
+      const feedbackEl = document.getElementById("feedback");
 
-  const isCorrect = correctAnswers.length === selectedValues.length &&
-    correctAnswers.every(ans => selectedValues.includes(ans));
+      const isCorrect =
+        correctAnswers.length === selectedValues.length &&
+        correctAnswers.every(ans => selectedValues.includes(ans));
 
-  if (isCorrect) {
-    feedbackEl.textContent = "Correct !";
-    feedbackEl.className = "feedback correct";
-    correctAnswersCount++;
-  } else {
-    feedbackEl.textContent = "Incorrect.";
-    feedbackEl.className = "feedback incorrect";
-  }
+      if (isCorrect) {
+        feedbackEl.textContent = "Correct !";
+        feedbackEl.className = "feedback correct";
+        correctAnswersCount++;
+      } else {
+        feedbackEl.textContent = "Incorrect.";
+        feedbackEl.className = "feedback incorrect";
+      }
 
-  // Désactiver tous les inputs
-  const allInputs = document.querySelectorAll("input");
-  allInputs.forEach(input => {
-    input.disabled = true;
+      // Surlignage
+      selectedInputs.forEach(input => {
+        input.disabled = true;
+        if (correctAnswers.includes(input.value)) {
+          input.parentElement.classList.add("correct-answer");
+        } else if (input.checked) {
+          input.parentElement.classList.add("wrong-answer");
+        }
+      });
 
-    // Surligner les bonnes réponses (cochées ou non)
-    if (correctAnswers.includes(input.value)) {
-      input.parentElement.classList.add("correct-answer");
+      // Surligne aussi les bonnes réponses NON cochées
+      selectedInputs.forEach(input => {
+        if (correctAnswers.includes(input.value)) {
+          input.parentElement.classList.add("correct-answer");
+        }
+      });
+
+      document.getElementById("validateButton").disabled = true;
+      document.getElementById("nextButton").style.display = "block";
     }
-  });
-
-  document.getElementById("validateButton").disabled = true;
-  document.getElementById("nextButton").style.display = "block";
-}
-
-
 
     function loadNextQuestion() {
       currentQuestionIndex++;
