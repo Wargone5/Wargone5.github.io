@@ -67,19 +67,11 @@
     .correct-answer {
       background-color: #b6fcb6 !important;
     }
-    .wrong-answer {
-      background-color: #fcb6b6 !important;
-    }
     button {
       display: block;
       margin: 10px auto;
       padding: 10px 20px;
       font-size: 1em;
-    }
-    img.result {
-      display: block;
-      margin: 20px auto;
-      max-width: 100px;
     }
   </style>
 </head>
@@ -93,7 +85,6 @@
     <button id="validateButton" onclick="validateAnswers()">Valider ma réponse</button>
     <button id="nextButton" onclick="loadNextQuestion()" style="display: none;">Question suivante</button>
     <div class="percentage" id="percentage"></div>
-    <img id="congratsImage" class="result" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Check_green_circle.svg/1024px-Check_green_circle.svg.png" alt="Bravo" style="display:none;">
   </div>
 
   <script>
@@ -172,18 +163,21 @@
       }
     ];
 
-    let shuffledQuestions = questions.sort(() => Math.random() - 0.5);
     let currentQuestionIndex = 0;
-    let correctAnswersCount = 0;
+
+    function shuffleArray(array) {
+      return [...array].sort(() => Math.random() - 0.5);
+    }
 
     function loadQuestion() {
-      const questionData = shuffledQuestions[currentQuestionIndex];
-      document.getElementById("question").innerHTML = questionData.question;
+      const questionData = shuffleArray(questions)[0];
+      currentQuestion = questionData;
 
+      document.getElementById("question").innerHTML = questionData.question;
       const answersList = document.getElementById("answers");
       answersList.innerHTML = "";
 
-      const shuffledOptions = [...questionData.options].sort(() => Math.random() - 0.5);
+      const shuffledOptions = shuffleArray(questionData.options);
 
       shuffledOptions.forEach((option, index) => {
         const li = document.createElement("li");
@@ -205,20 +199,12 @@
       document.getElementById("nextButton").style.display = "none";
       document.getElementById("validateButton").disabled = false;
 
-      updateQuestionCounter();
+      document.getElementById("questionCounter").textContent = "";
       MathJax.typeset();
     }
 
-    function updateQuestionCounter() {
-      const total = shuffledQuestions.length;
-      const current = Math.min(currentQuestionIndex + 1, total);
-      document.getElementById("questionCounter").textContent = `${current}/${total}`;
-    }
-
     function validateAnswers() {
-      const questionData = shuffledQuestions[currentQuestionIndex];
-      const correctAnswers = questionData.correct;
-
+      const correctAnswers = currentQuestion.correct;
       const selectedInputs = Array.from(document.querySelectorAll("input"));
       const selectedValues = selectedInputs.filter(i => i.checked).map(i => i.value);
       const feedbackEl = document.getElementById("feedback");
@@ -227,27 +213,11 @@
         correctAnswers.length === selectedValues.length &&
         correctAnswers.every(ans => selectedValues.includes(ans));
 
-      if (isCorrect) {
-        feedbackEl.textContent = "Correct !";
-        feedbackEl.className = "feedback correct";
-        correctAnswersCount++;
-      } else {
-        feedbackEl.textContent = "Incorrect.";
-        feedbackEl.className = "feedback incorrect";
-      }
+      feedbackEl.textContent = isCorrect ? "Correct !" : "Incorrect.";
+      feedbackEl.className = "feedback " + (isCorrect ? "correct" : "incorrect");
 
-      // Surlignage
       selectedInputs.forEach(input => {
         input.disabled = true;
-        if (correctAnswers.includes(input.value)) {
-          input.parentElement.classList.add("correct-answer");
-        } else if (input.checked) {
-          input.parentElement.classList.add("wrong-answer");
-        }
-      });
-
-      // Surligne aussi les bonnes réponses NON cochées
-      selectedInputs.forEach(input => {
         if (correctAnswers.includes(input.value)) {
           input.parentElement.classList.add("correct-answer");
         }
@@ -258,27 +228,10 @@
     }
 
     function loadNextQuestion() {
-      currentQuestionIndex++;
-
-      if (currentQuestionIndex < shuffledQuestions.length) {
-        loadQuestion();
-      } else {
-        const percentage = (correctAnswersCount / shuffledQuestions.length) * 100;
-        document.getElementById("question").innerHTML = "Test terminé !";
-        document.getElementById("answers").innerHTML = "";
-        document.getElementById("questionCounter").textContent = "";
-        document.getElementById("feedback").textContent = "";
-        document.getElementById("validateButton").style.display = "none";
-        document.getElementById("nextButton").style.display = "none";
-        document.getElementById("percentage").textContent =
-          `Votre score est de ${percentage.toFixed(2)}%`;
-
-        if (percentage >= 70) {
-          document.getElementById("congratsImage").style.display = "block";
-        }
-      }
+      loadQuestion();
     }
 
+    let currentQuestion;
     loadQuestion();
   </script>
 </body>
