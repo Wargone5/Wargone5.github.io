@@ -38,12 +38,6 @@
       list-style: none;
       padding: 0;
     }
-    .answers li label {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
-    }
-
     .answers li {
       background-color: #f0f0f0;
       margin: 5px 0;
@@ -52,6 +46,11 @@
     }
     .answers li:hover {
       background-color: #e0e0e0;
+    }
+    .answers li label {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
     }
     .feedback {
       margin-top: 20px;
@@ -98,14 +97,14 @@
       {
         question: "Transformée de Fourier de la Fonction Porte : \\( s(t) = A \\cdot \\text{rect}(at) \\) ?",
         options: [
-          "S(f) = A a \cdot \text{sinc}^2(\pi f a)",
-          "S(f) = A \cdot \frac{\sin(\pi f a)}{\pi f} = \frac{A}{a} \cdot \text{sinc}(\pi f a)",
-          "S(f) = A \cdot \delta(f)",
-          "S(f) = \frac{1}{2} \delta(f) + \frac{i}{2\pi f}",
-          "S(f) = \frac{A}{2} \left[ \delta(f - f_0) + \delta(f + f_0) \right]",
-          "S(f) = \frac{A}{2i} \left[ \delta(f - f_0) - \delta(f + f_0) \right]"
+          "S(f) = A a \\cdot \\text{sinc}^2(\\pi f a)",
+          "S(f) = A \\cdot \\frac{\\sin(\\pi f a)}{\\pi f} = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
+          "S(f) = A \\cdot \\delta(f)",
+          "S(f) = \\frac{1}{2} \\delta(f) + \\frac{i}{2\\pi f}",
+          "S(f) = \\frac{A}{2} \\left[ \\delta(f - f_0) + \\delta(f + f_0) \\right]",
+          "S(f) = \\frac{A}{2i} \\left[ \\delta(f - f_0) - \\delta(f + f_0) \\right]"
         ],
-        correct: ["S(f) = A a \cdot \text{sinc}^2(\pi f a)"]
+        correct: ["S(f) = A a \\cdot \\text{sinc}^2(\\pi f a)"]
       },
       {
         question: "Transformée de Fourier de la Fonction Triangle : \\( s(t) = A \\cdot \\text{tri}(at) \\) ?",
@@ -117,25 +116,25 @@
           "S(f) = \\frac{A}{2} \\left[ \\delta(f - f_0) + \\delta(f + f_0) \\right]",
           "S(f) = \\frac{A}{2i} \\left[ \\delta(f - f_0) - \\delta(f + f_0) \\right]"
         ],
-        correct: ["\\( \\text{sinc}^2(f) \\)"]
+        correct: ["S(f) = A a \\cdot \\text{sinc}^2(\\pi f a)"]
       },
       {
         question: "Transformée de Fourier de la Fonction Sinus : \\( s(t) = A \\cdot \\sin(2\\pi f_0 t) \\) ?",
         options: [
-          "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
+          "\\( \\frac{A}{2i} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
           "\\( A [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
           "\\( \\text{sinc}(f) \\)",
           "\\( e^{j2\\pi f_0 t} \\)",
           "\\( A \\cdot \\cos(2\\pi f_0 t) \\)",
           "\\( \\delta(f) \\)"
         ],
-        correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)"]
+        correct: ["\\( \\frac{A}{2i} [\\delta(f - f_0) - \\delta(f + f_0)] \\)"]
       },
       {
         question: "Transformée de Fourier de la Fonction Cosinus : \\( s(t) = A \\cdot \\cos(2\\pi f_0 t) \\) ?",
         options: [
           "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
-          "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
+          "\\( \\frac{A}{2i} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
           "\\( \\delta(f) \\)",
           "\\( \\text{sinc}(f) \\)",
           "\\( A \\cdot \\sin(2\\pi f_0 t) \\)",
@@ -146,7 +145,7 @@
       {
         question: "Transformée de Fourier de la Fonction Constante : \\( s(t) = A \\) ?",
         options: [
-          "S(f) = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
+          "\\( A \\cdot \\delta(f) \\)",
           "S(f) = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
           "S(f) = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
           "S(f) = \\frac{A}{a} \\cdot \\text{sinc}(\\pi f a)",
@@ -158,37 +157,32 @@
       {
         question: "Transformée de Fourier de l’échelon unité (Heaviside) : \\( s(t) = \\epsilon(t) \\) ?",
         options: [
-          "\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)",
+          "\\( \\frac{1}{2} \\delta(f) + \\frac{1}{2i\\pi f} \\)",
           "\\( \\delta(f) \\)",
           "\\( \\text{sinc}(f) \\)",
           "\\( A \\cdot \\delta(f) \\)",
           "\\( 1 \\)",
           "\\( e^{-j2\\pi f} \\)"
         ],
-        correct: ["\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)"]
-      },
-      {
-        question: "N'apparaît pas",
-        options: [
-          "de",
-          "de",
-          "de",
-          "de",
-          "de",
-          "de"
-        ],
-        correct: ["\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)"]
+        correct: ["\\( \\frac{1}{2} \\delta(f) + \\frac{1}{2i\\pi f} \\)"]
       }
     ];
-
-    let currentQuestionIndex = 0;
 
     function shuffleArray(array) {
       return [...array].sort(() => Math.random() - 0.5);
     }
 
+    const shuffledQuestions = shuffleArray(questions);
+    let currentQuestionIndex = 0;
+    let currentQuestion;
+
     function loadQuestion() {
-      const questionData = shuffleArray(questions)[0];
+      if (currentQuestionIndex >= shuffledQuestions.length) {
+        currentQuestionIndex = 0;
+      }
+
+      const questionData = shuffledQuestions[currentQuestionIndex];
+      currentQuestionIndex++;
       currentQuestion = questionData;
 
       document.getElementById("question").innerHTML = questionData.question;
@@ -216,9 +210,9 @@
       document.getElementById("feedback").textContent = "";
       document.getElementById("nextButton").style.display = "none";
       document.getElementById("validateButton").disabled = false;
-
       document.getElementById("questionCounter").textContent = "";
-      setTimeout(() => MathJax.typeset(), 0);
+
+      MathJax.typesetPromise();
     }
 
     function validateAnswers() {
@@ -249,7 +243,6 @@
       loadQuestion();
     }
 
-    let currentQuestion;
     loadQuestion();
   </script>
 </body>
