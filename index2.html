@@ -38,6 +38,12 @@
       list-style: none;
       padding: 0;
     }
+    .answers li label {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+    }
+
     .answers li {
       background-color: #f0f0f0;
       margin: 5px 0;
@@ -212,7 +218,7 @@
       document.getElementById("validateButton").disabled = false;
 
       document.getElementById("questionCounter").textContent = "";
-      MathJax.typeset();
+      setTimeout(() => MathJax.typeset(), 0);
     }
 
     function validateAnswers() {
