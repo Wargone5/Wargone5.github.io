@@ -102,9 +102,6 @@
         correct: ["\\( \\text{sinc}(f) \\)"]
       },
       {
-
-        question: "Transformée de Fourier de la Fonction Triangle \( s(t) = A \cdot \text{tri}(at) \) ?",
-
         question: "Transformée de Fourier de la Fonction Triangle \\( s(t) = A \\cdot \\text{tri}(at) \\) ?",
         options: [
           "\\( \\text{rect}^2(f) \\)",
@@ -117,9 +114,6 @@
         correct: ["\\( \\text{sinc}^2(f) \\)"]
       },
       {
-
-        question: "Transformée de Fourier de la Fonction Sinus \( s(t) = A \cdot \sin(2\pi f_0 t) \) ?",
-
         question: "Transformée de Fourier de la Fonction Sinus \\( s(t) = A \\cdot \\sin(2\\pi f_0 t) \\) ?",
         options: [
           "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
@@ -132,9 +126,6 @@
         correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)"]
       },
       {
-
-        question: "Transformée de Fourier de la Fonction Cosinus \( s(t) = A \cdot \cos(2\pi f_0 t) \) ?",
-
         question: "Transformée de Fourier de la Fonction Cosinus \\( s(t) = A \\cdot \\cos(2\\pi f_0 t) \\) ?",
         options: [
           "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
@@ -147,9 +138,6 @@
         correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)"]
       },
       {
-
-        question: "Transformée de Fourier de la Fonction Constante \( s(t) = A \) ?",
-
         question: "Transformée de Fourier de la Fonction Constante \\( s(t) = A \\) ?",
         options: [
           "\\( A \\cdot \\delta(f) \\)",
@@ -162,9 +150,6 @@
         correct: ["\\( A \\cdot \\delta(f) \\)"]
       },
       {
-
-        question: "Transformée de Fourier de l’échelon unité (Heaviside) \( s(t) = \epsilon(t) \) ?",
-
         question: "Transformée de Fourier de l’échelon unité (Heaviside) \\( s(t) = \\epsilon(t) \\) ?",
         options: [
           "\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)",
@@ -178,14 +163,26 @@
       }
     ];
 
-    let currentQuestionIndex = 0;
-
     function shuffleArray(array) {
       return [...array].sort(() => Math.random() - 0.5);
     }
 
+    let shuffledQuestions = shuffleArray(questions);
+    let currentQuestionIndex = 0;
+    let currentQuestion;
+
     function loadQuestion() {
-      const questionData = shuffleArray(questions)[0];
+      if (currentQuestionIndex >= shuffledQuestions.length) {
+        document.getElementById("question").textContent = "Fin du quiz !";
+        document.getElementById("answers").innerHTML = "";
+        document.getElementById("validateButton").style.display = "none";
+        document.getElementById("nextButton").style.display = "none";
+        document.getElementById("feedback").textContent = "";
+        document.getElementById("questionCounter").textContent = "";
+        return;
+      }
+
+      const questionData = shuffledQuestions[currentQuestionIndex];
       currentQuestion = questionData;
 
       document.getElementById("question").innerHTML = questionData.question;
@@ -214,7 +211,7 @@
       document.getElementById("nextButton").style.display = "none";
       document.getElementById("validateButton").disabled = false;
 
-      document.getElementById("questionCounter").textContent = "";
+      document.getElementById("questionCounter").textContent = `Question ${currentQuestionIndex + 1} / ${shuffledQuestions.length}`;
       MathJax.typeset();
     }
 
@@ -243,10 +240,10 @@
     }
 
     function loadNextQuestion() {
+      currentQuestionIndex++;
       loadQuestion();
     }
 
-    let currentQuestion;
     loadQuestion();
   </script>
 </body>
