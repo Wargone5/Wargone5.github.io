@@ -1,406 +1,65 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entraînement Transformée de Fourier - Léocard Jérémie</title>
-    <style>
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #333;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Changement ici */
-    height: auto; /* Changement ici */
-    min-height: 100vh;
-    overflow-y: auto; /* Permet de scroller */
-}
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
-        }
-        h1 {
-        font-size: 1.4em;
-        text-align: center;
-        margin-bottom: 15px;
-        }
-        h2 {
-            font-size: 1.1em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .question-wrapper {
-            display: flex;
-            text-align: center;
-            margin-bottom: 20px;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .question {
-            font-size: 1.2em;
-            text-align: center;
-            flex: 1;
-        }
-        .question img {
-            max-width: 100%;
-            height: auto;
-            max-height: 150px;
-            border-radius: 8px;
-        }
-        .answers {
-            list-style: none;
-            padding: 0;
-        }
-        .answers li {
-            background-color: #f0f0f0;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.95em;
-        }
-        .answers li:hover {
-            background-color: #e0e0e0;
-        }
-        .feedback {
-            margin-top: 20px;
-            font-size: 1.1em;
-            text-align: center;
-        }
-        .feedback.correct {
-            color: green;
-        }
-        .feedback.incorrect {
-            color: red;
-        }
-        .percentage {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .question-wrapper {
-            text-align: center;
-            display: flex;
-            flex-direction: column; /* Ajouté pour que l’image soit en dessous de la question */
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
-        #questionImage img {
-            max-width: 100%; /* Empêche l’image de dépasser le conteneur */
-            height: auto;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-        @media screen and (max-width: 600px) {
-        body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Changement ici */
-    height: auto; /* Changement ici */
-    min-height: 100vh;
-    overflow-y: auto; /* Permet de scroller */
-}
-        .container {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 600px;
-        }
-        h1 {
-        font-size: 1.4em;
-        text-align: center;
-        margin-bottom: 15px;
-        }
-        h2 {
-            font-size: 1.1em;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .question-wrapper {
-            display: flex;
-            text-align: center;
-            margin-bottom: 20px;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-        .question {
-            font-size: 1.2em;
-            text-align: center;
-            flex: 1;
-        }
-        .question img {
-            max-width: 100%;
-            height: auto;
-            max-height: 150px;
-            border-radius: 8px;
-        }
-        .answers {
-            list-style: none;
-            padding: 0;
-        }
-        .answers li {
-            background-color: #f0f0f0;
-            margin: 5px 0;
-            padding: 10px;
-            border-radius: 5px;
-            font-size: 0.95em;
-        }
-        .answers li:hover {
-            background-color: #e0e0e0;
-        }
-        .feedback {
-            margin-top: 20px;
-            font-size: 1.1em;
-            text-align: center;
-        }
-        .feedback.correct {
-            color: green;
-        }
-        .feedback.incorrect {
-            color: red;
-        }
-        .percentage {
-            font-size: 1.2em;
-            font-weight: bold;
-            margin-top: 20px;
-            text-align: center;
-        }
-        .question-wrapper {
-            display: flex;
-            flex-direction: column; /* Ajouté pour que l’image soit en dessous de la question */
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
-        #questionImage img {
-            max-width: 100%; /* Empêche l’image de dépasser le conteneur */
-            height: auto;
-            margin-top: 10px;
-            border-radius: 8px;
-        }
-    }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Transformées de Fourier</title>
+  <!-- Inclusion de MathJax -->
+  <script type="text/javascript" async 
+    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML">
+  </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Entraînement CCNA</h1>
-        <h2>Léocard Jérémie powered by OpenAI</h2>
-        <div id="questionCounter" style="text-align: center; font-weight: bold; margin-bottom: 10px;"></div>    
-        <div class="question-wrapper" id="questionWrapper">
-            <div class="question" id="question"></div>
-            <div id="questionImage"></div>
-        </div>
-        <ul class="answers" id="answers"></ul>
-        <div class="feedback" id="feedback"></div>
-        <button id="validateButton" onclick="validateAnswers()">Valider mes réponses</button>
-        <button id="nextButton" style="display: none;" onclick="nextQuestion()">Question suivante</button>
-        <div class="percentage" id="percentage"></div>
-        <div id="resultImage" style="text-align: center; margin-top: 20px;"></div>
-    </div>
 
-    <script>
-        const questions_ccna = {
-  '1. Quelle est la transformée de Fourier de la fonction porte \\( \\text{rect}(t) \\) ?': [
-    ['\\( \\text{sinc}(f) \\)', '\\( \\text{rect}(f) \\)', '\\( \\delta(f) \\)', '\\( 1 \\)', '\\( e^{-j2\\pi f} \\)', '\\( \\text{tri}(f) \\)'],
-    ['\\( \\text{sinc}(f) \\)']
-  ],
-  '2. Quelle est la transformée de Fourier de la fonction triangle \\( \\text{tri}(t) \\) ?': [
-    ['\\( \\text{rect}^2(f) \\)', '\\( \\text{sinc}^2(f) \\)', '\\( \\delta(f) \\)', '\\( 1 \\)', '\\( \\text{sinc}(f) \\)', '\\( \\text{tri}(f) \\)'],
-    ['\\( \\text{sinc}^2(f) \\)']
-  ],
-  '3. Transformée de Fourier de \\( A \\cdot \\sin(2\\pi f_0 t) \\) ?': [
-    ['\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)', '\\( A [\\delta(f - f_0) + \\delta(f + f_0)] \\)', '\\( \\text{sinc}(f) \\)', '\\( e^{j2\\pi f_0 t} \\)', '\\( A \\cdot \\cos(2\\pi f_0 t) \\)', '\\( \\delta(f) \\)'],
-    ['\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)']
-  ],
-  '4. Transformée de Fourier de \\( A \\cdot \\cos(2\\pi f_0 t) \\) ?': [
-    ['\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)', '\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)', '\\( \\delta(f) \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\cdot \\sin(2\\pi f_0 t) \\)', '\\( 1 \\)'],
-    ['\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)']
-  ],
-  '5. Transformée de Fourier de \\( s(t) = A \\) ?': [
-    ['\\( A \\cdot \\delta(f) \\)', '\\( 1 \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\)', '\\( \\delta(t) \\)', '\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)'],
-    ['\\( A \\cdot \\delta(f) \\)']
-  ],
-  '6. Transformée de Fourier de l’échelon unité \\( E(t) \\) ?': [
-    ['\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)', '\\( \\delta(f) \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\cdot \\delta(f) \\)', '\\( 1 \\)', '\\( e^{-j2\\pi f} \\)'],
-    ['\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)']
-  ]
-};
+  <h1>Transformées de Fourier des Signaux</h1>
 
-        function updateQuestionCounter() {
-    const total = Math.min(60, questionsArray.length); // S'assurer de ne pas dépasser 60
-    const current = Math.min(currentQuestionIndex + 1, total);
-    document.getElementById('questionCounter').textContent = `${current}/${total}`;
-}
+  <p><b>Rectangle</b><br>
+  Fonction : \( s(t) = A \cdot \text{rect}(at) \)<br>
+  Transformée : 
+  \[
+  S(f) = A \cdot \frac{\sin(\pi f a)}{\pi f} = \frac{A}{a} \cdot \text{sinc}(\pi f a)
+  \]
+  </p>
 
-        function shuffleArray(array) {
-            for (let i = array.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [array[i], array[j]] = [array[j], array[i]];
-            }
-            return array;
-        }
+  <p><b>Triangle</b><br>
+  Fonction : \( s(t) = A \cdot \text{tri}(at) \)<br>
+  Transformée :
+  \[
+  S(f) = A a \cdot \text{sinc}^2(\pi f a)
+  \]
+  </p>
 
-        // Mélanger les questions
-        let questionsArray = Object.entries(questions_ccna);
-        questionsArray = shuffleArray(Object.entries(questions_ccna)).slice(0, 60); // Prendre seulement 60 questions pour mieux simuler l'épreuve
-        
-        let currentQuestionIndex = 0;
-        let correctAnswersCount = 0; // Compteur des bonnes réponses
+  <p><b>Constante</b><br>
+  Fonction : \( s(t) = A \)<br>
+  Transformée :
+  \[
+  S(f) = A \cdot \delta(f)
+  \]
+  </p>
 
-        function loadQuestion() {
-            const [questionText, [options, correctAnswers]] = questionsArray[currentQuestionIndex];
+  <p><b>Échelon de Heaviside</b><br>
+  Fonction : \( s(t) = \epsilon(t) \)<br>
+  Transformée :
+  \[
+  S(f) = \frac{1}{2} \delta(f) + \frac{i}{2\pi f}
+  \]
+  </p>
 
+  <p><b>Cosinus</b><br>
+  Fonction : \( s(t) = A \cdot \cos(2\pi f_0 t) \)<br>
+  Transformée :
+  \[
+  S(f) = \frac{A}{2} \left[ \delta(f - f_0) + \delta(f + f_0) \right]
+  \]
+  </p>
 
-            document.getElementById('question').textContent = questionText;
+  <p><b>Sinus</b><br>
+  Fonction : \( s(t) = A \cdot \sin(2\pi f_0 t) \)<br>
+  Transformée :
+  \[
+  S(f) = \frac{A}{2i} \left[ \delta(f - f_0) - \delta(f + f_0) \right]
+  \]
+  </p>
 
-            // Mélanger les options avant de les afficher
-            const shuffledOptions = [...options].sort(() => Math.random() - 0.5);
-
-            const answersList = document.getElementById('answers');
-            answersList.innerHTML = '';
-
-            shuffledOptions.forEach((option, index) => {
-                const listItem = document.createElement('li');
-                const checkbox = document.createElement('input');
-                checkbox.type = 'checkbox';
-                checkbox.id = 'answer' + index;
-                checkbox.value = option;
-                
-                const label = document.createElement('label');
-                label.setAttribute('for', 'answer' + index);
-                label.textContent = option;
-
-                listItem.appendChild(checkbox);
-                listItem.appendChild(label);
-                answersList.appendChild(listItem);
-                updateQuestionCounter();
-                MathJax.typeset();
-            });
-
-            document.getElementById('feedback').textContent = '';
-
-            const imageContainer = document.getElementById('questionImage');
-            imageContainer.innerHTML = '';  // Reset image container
-            if (Array.isArray(imageUrl)) {
-                imageUrl.forEach(url => {
-                    if (url) {
-                        const imageElement = document.createElement('img');
-                        imageElement.src = url;
-                        imageElement.alt = 'Image associée';
-                        imageElement.style.marginRight = "10px";
-                        imageContainer.appendChild(imageElement);
-                    }
-                });
-            } else if (typeof imageUrl === 'string' && imageUrl) {
-                const imageElement = document.createElement('img');
-                imageElement.src = imageUrl;
-                imageElement.alt = 'Image associée';
-                imageContainer.appendChild(imageElement);
-
-            }
-            // Réinitialise les boutons
-            document.getElementById('validateButton').disabled = false;
-            document.getElementById('nextButton').style.display = 'none';
-
-        }
-
-        function validateAnswers() {
-    const [questionText, [, correctAnswers]] = questionsArray[currentQuestionIndex];
-
-    const selectedAnswers = Array.from(document.querySelectorAll('.answers input:checked')).map(checkbox => checkbox.value);
-    const feedbackElement = document.getElementById('feedback');
-    const nextButton = document.getElementById('nextButton');
-
-    const isCorrect = correctAnswers.every(answer => selectedAnswers.includes(answer)) &&
-                      selectedAnswers.every(answer => correctAnswers.includes(answer));
-
-    const allAnswerItems = document.querySelectorAll('.answers li');
-
-    if (isCorrect) {
-        feedbackElement.textContent = 'Correct !';
-        feedbackElement.classList.add('correct');
-        feedbackElement.classList.remove('incorrect');
-        correctAnswersCount++;
-        nextButton.style.display = 'none';
-
-        setTimeout(() => nextQuestion(), 1500);
-    } else {
-        feedbackElement.textContent = 'Incorrect. Voici les bonnes réponses :';
-        feedbackElement.classList.add('incorrect');
-        feedbackElement.classList.remove('correct');
-
-        // Surligne les bonnes réponses en vert
-        allAnswerItems.forEach(item => {
-            const label = item.querySelector('label');
-            if (correctAnswers.includes(label.textContent)) {
-                item.style.backgroundColor = '#c8f7c5';
-            }
-
-            // Désactive les checkbox pour éviter de recliquer
-            const checkbox = item.querySelector('input');
-            checkbox.disabled = true;
-        });
-
-        // Affiche le bouton pour passer à la question suivante
-        nextButton.style.display = 'inline-block';
-    }
-
-    // Désactive le bouton de validation après réponse
-    document.getElementById('validateButton').disabled = true;
-}
-
-
-        // Appel initial pour charger la première question
-        loadQuestion();
-
-
-        function nextQuestion() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questionsArray.length) {
-        loadQuestion();
-    } else {
-        // Calcul du pourcentage de réussite
-        const percentage = (correctAnswersCount / questionsArray.length) * 100;
-
-        document.getElementById('question').textContent = 'Félicitations, vous avez terminé toutes les questions !';
-document.getElementById('answers').innerHTML = '';
-document.getElementById('feedback').textContent = '';
-document.getElementById('validateButton').style.display = 'none';
-document.getElementById('nextButton').style.display = 'none';
-document.getElementById('questionImage').style.display = 'none';
-        
-
-const percentageText = `Votre pourcentage de réussite est de ${percentage.toFixed(2)}%`;
-document.getElementById('percentage').textContent = percentageText;
-
-// Afficher une image si le score est supérieur à 70%
-const resultImage = document.getElementById('resultImage');
-resultImage.innerHTML = '';
-if (percentage >= 70) {
-    const img = document.createElement('img');
-    img.src = 'https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExY3A3eHZ1c2d5bXlvbW9yNnM1cTZrcDNzNHZmZGsyamphNzJ2ZTk5NyZlcD12MV9naWZzX3NlYXJjaCZjdD1n/Ll2fajzk9DgaY/giphy.gif'; // Image de réussite
-    img.alt = 'Bravo !';
-    img.style.maxWidth = '100%';
-    img.style.borderRadius = '8px';
-    resultImage.appendChild(img);
-}
-
-    }
-}
-
-    </script>
 </body>
 </html>
