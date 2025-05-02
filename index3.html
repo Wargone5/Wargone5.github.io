@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Entraînement CCNA - Léocard Jérémie</title>
+    <title>Entraînement Transformée de Fourier - Léocard Jérémie</title>
     <style>
         body {
     font-family: Arial, sans-serif;
@@ -212,80 +212,33 @@
     </div>
 
     <script>
-        const questions = [
-      {
-        question: "Quelle est la transformée de Fourier de la fonction porte \\( \\text{rect}(t) \\) ?",
-        options: [
-          "\\( \\text{sinc}(f) \\)",
-          "\\( \\text{rect}(f) \\)",
-          "\\( \\delta(f) \\)",
-          "\\( 1 \\)",
-          "\\( e^{-j2\\pi f} \\)",
-          "\\( \\text{tri}(f) \\)"
-        ],
-        correct: ["\\( \\text{sinc}(f) \\)"]
-      },
-      {
-        question: "Quelle est la transformée de Fourier de la fonction triangle \\( \\text{tri}(t) \\) ?",
-        options: [
-          "\\( \\text{rect}^2(f) \\)",
-          "\\( \\text{sinc}^2(f) \\)",
-          "\\( \\delta(f) \\)",
-          "\\( 1 \\)",
-          "\\( \\text{sinc}(f) \\)",
-          "\\( \\text{tri}(f) \\)"
-        ],
-        correct: ["\\( \\text{sinc}^2(f) \\)"]
-      },
-      {
-        question: "Transformée de Fourier de \\( A \\cdot \\sin(2\\pi f_0 t) \\) ?",
-        options: [
-          "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
-          "\\( A [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
-          "\\( \\text{sinc}(f) \\)",
-          "\\( e^{j2\\pi f_0 t} \\)",
-          "\\( A \\cdot \\cos(2\\pi f_0 t) \\)",
-          "\\( \\delta(f) \\)"
-        ],
-        correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)"]
-      },
-      {
-        question: "Transformée de Fourier de \\( A \\cdot \\cos(2\\pi f_0 t) \\) ?",
-        options: [
-          "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)",
-          "\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)",
-          "\\( \\delta(f) \\)",
-          "\\( \\text{sinc}(f) \\)",
-          "\\( A \\cdot \\sin(2\\pi f_0 t) \\)",
-          "\\( 1 \\)"
-        ],
-        correct: ["\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)"]
-      },
-      {
-        question: "Transformée de Fourier de \\( s(t) = A \\) ?",
-        options: [
-          "\\( A \\cdot \\delta(f) \\)",
-          "\\( 1 \\)",
-          "\\( \\text{sinc}(f) \\)",
-          "\\( A \\)",
-          "\\( \\delta(t) \\)",
-          "\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)"
-        ],
-        correct: ["\\( A \\cdot \\delta(f) \\)"]
-      },
-      {
-        question: "Transformée de Fourier de l’échelon unité \\( E(t) \\) ?",
-        options: [
-          "\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)",
-          "\\( \\delta(f) \\)",
-          "\\( \\text{sinc}(f) \\)",
-          "\\( A \\cdot \\delta(f) \\)",
-          "\\( 1 \\)",
-          "\\( e^{-j2\\pi f} \\)"
-        ],
-        correct: ["\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)"]
-      }
-    ];
+        const questions_fourier = {
+  '1. Quelle est la transformée de Fourier de la fonction porte \\( \\text{rect}(t) \\) ?': [
+    ['\\( \\text{sinc}(f) \\)', '\\( \\text{rect}(f) \\)', '\\( \\delta(f) \\)', '\\( 1 \\)', '\\( e^{-j2\\pi f} \\)', '\\( \\text{tri}(f) \\)'],
+    ['\\( \\text{sinc}(f) \\)']
+  ],
+  '2. Quelle est la transformée de Fourier de la fonction triangle \\( \\text{tri}(t) \\) ?': [
+    ['\\( \\text{rect}^2(f) \\)', '\\( \\text{sinc}^2(f) \\)', '\\( \\delta(f) \\)', '\\( 1 \\)', '\\( \\text{sinc}(f) \\)', '\\( \\text{tri}(f) \\)'],
+    ['\\( \\text{sinc}^2(f) \\)']
+  ],
+  '3. Transformée de Fourier de \\( A \\cdot \\sin(2\\pi f_0 t) \\) ?': [
+    ['\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)', '\\( A [\\delta(f - f_0) + \\delta(f + f_0)] \\)', '\\( \\text{sinc}(f) \\)', '\\( e^{j2\\pi f_0 t} \\)', '\\( A \\cdot \\cos(2\\pi f_0 t) \\)', '\\( \\delta(f) \\)'],
+    ['\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)']
+  ],
+  '4. Transformée de Fourier de \\( A \\cdot \\cos(2\\pi f_0 t) \\) ?': [
+    ['\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)', '\\( \\frac{A}{2} [\\delta(f - f_0) - \\delta(f + f_0)] \\)', '\\( \\delta(f) \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\cdot \\sin(2\\pi f_0 t) \\)', '\\( 1 \\)'],
+    ['\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)']
+  ],
+  '5. Transformée de Fourier de \\( s(t) = A \\) ?': [
+    ['\\( A \\cdot \\delta(f) \\)', '\\( 1 \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\)', '\\( \\delta(t) \\)', '\\( \\frac{A}{2} [\\delta(f - f_0) + \\delta(f + f_0)] \\)'],
+    ['\\( A \\cdot \\delta(f) \\)']
+  ],
+  '6. Transformée de Fourier de l’échelon unité \\( E(t) \\) ?': [
+    ['\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)', '\\( \\delta(f) \\)', '\\( \\text{sinc}(f) \\)', '\\( A \\cdot \\delta(f) \\)', '\\( 1 \\)', '\\( e^{-j2\\pi f} \\)'],
+    ['\\( \\frac{1}{j2\\pi f} + \\pi \\cdot \\delta(f) \\)']
+  ]
+};
+
         function updateQuestionCounter() {
     const total = Math.min(60, questionsArray.length); // S'assurer de ne pas dépasser 60
     const current = Math.min(currentQuestionIndex + 1, total);
